@@ -34,35 +34,4 @@ base_model <- glmer(
 )
 summary(base_model)
 
-tab_model(base_model, model, )
-library(performance)
-
-r2_res <- r2(model)   # 計算 R²
-print(r2_res)
-
-m <- model.matrix(model)
-head(m)
-
-cor_matrix <- cor(data, use = "complete.obs")
-print(round(cor_matrix, 2))
-
-# 資料處理，將所有類別型變數轉為 factor
-base_data <- base_data %>%
-  mutate(
-    module_presentation = as.factor(module_presentation),
-    imd_band = as.factor(imd_band),
-    gender = as.factor(gender),
-    score = as.factor(score), 
-    region = as.factor(region),
-    highest_education = as.factor(highest_education),
-    age_band = as.factor(age_band)
-    # 可以繼續加其他類別變數
-  )
-
-base_model <- glmer(
-  score ~ region + highest_education + age_band + imd_band + gender + 
-    (1 | module_presentation),  # 隨機截距
-  data = base_data,
-  family = binomial(link = "logit")
-)
-summary(base_model)
+tab_model(base_model, model,)
